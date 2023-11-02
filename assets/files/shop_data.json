@@ -1,0 +1,28 @@
+{
+  "shoplist": [
+    {
+      "id": 1,
+      "name": "XYZ Marts",
+      "address1": "Building 1",
+      "address2": "XYZ Area Pune",
+      "coordinates": "",
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-blue-hero?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1604021661000"
+    },
+    {
+      "id": 2,
+      "name": "ABC Marts",
+      "address1": "Building 2",
+      "address2": "ABC Area Pune",
+      "coordinates": "",
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-blue-hero?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1604021661000"
+    },
+    {
+      "id": 2,
+      "name": "PQR Marts",
+      "address1": "Building 3",
+      "address2": "PQR Area Pune",
+      "coordinates": "",
+      "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-blue-hero?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1604021661000"
+    }
+  ]
+}

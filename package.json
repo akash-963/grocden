@@ -1,0 +1,23 @@
+{
+  "name": "grocden",
+  "version": "1.0.0",
+  "description": "This is official project for grocden.com a hyperlocal groceries and essentials delivery platform",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "@google-cloud/storage": "^7.3.1",
+    "firebase-admin": "^11.11.0",
+    "firebase-functions": "^4.4.1",
+    "sharp": "^0.32.6"
+  }
+}
