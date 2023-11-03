@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:velocity_x/velocity_x.dart';
 import '../models/product_model.dart';
@@ -21,6 +22,32 @@ class _HomeTabState extends State<HomeTab> {
   String userId = FirebaseAuth.instance.currentUser!.uid;
   TextEditingController _searchController = TextEditingController();
   List<Product> _filteredProducts = [];
+
+
+  Future<String?> getSelectedShopId() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.getString('selectedShopId');
+    } catch (e) {
+      print('Error getting selectedShopId: $e');
+      return null;
+    }
+  }
+
+
+  Future<void> getshop() async {
+    String? selectedShopId = await getSelectedShopId();
+
+    if (selectedShopId != null) {
+      // Do something with the selectedShopId
+      print('Selected Shop ID: $selectedShopId');
+    } else {
+      // Handle the case when the selectedShopId is not available
+      print('No selected Shop ID found');
+    }
+  }
+
+
 
 
   Future<void> loadDataFromFirestore() async {
@@ -58,6 +85,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
+    getshop();
     loadData();
   }
 

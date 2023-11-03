@@ -42,6 +42,8 @@ dependencies:
   autocomplete_textfield: ^2.0.1
   firebase_messaging: ^14.6.8
   provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  fluttertoast: ^8.0.7
 
 dev_dependencies:
   flutter_test:
