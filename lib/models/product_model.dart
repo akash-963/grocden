@@ -8,7 +8,6 @@ class ProductModel {
   factory ProductModel() => shopModel;
 
   static List<Product> products = [];
-
 }
 
 class Product {

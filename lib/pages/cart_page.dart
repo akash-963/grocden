@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../models/cart_model.dart';
+import '../widgets/cart_button.dart';
 import '../widgets/shop_image.dart';
 import 'order_summary.dart';
 
@@ -274,7 +275,7 @@ class CartTile extends StatelessWidget {
                     buttonPadding: EdgeInsets.zero,
                     children: [
                       "\$${item.price}".text.xl.bold.make(),
-                      _ChangeQuantity(product: item),
+                      ChangeQuantity(product: item),
                     ],
                   ),
                 ],
@@ -288,112 +289,117 @@ class CartTile extends StatelessWidget {
 }
 
 
-class _ChangeQuantity extends StatefulWidget {
-  final CartItem product;
-
-  const _ChangeQuantity({Key? key, required this.product}) : super(key: key);
-
-  @override
-  State<_ChangeQuantity> createState() => _ChangeQuantityState();
-}
 
 
-class _ChangeQuantityState extends State<_ChangeQuantity> {
-  // You can implement quantity change logic here
-  // TextEditingController quantity = TextEditingController();
-  // bool stateChange = false;
-  // int changedQuantity = widget.product.quantity as int;
-  String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  @override
-  Widget build(BuildContext context) {
-    // quantity = widget.product.quantity as TextEditingController;
-    // print("Rebuild");
-    // print(stateChange);
-    return Container(
-      width: 100,
-      height: 30,
-      decoration: ShapeDecoration(
-        color: Color(0xff403b58),
-        shape: StadiumBorder(),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          InkWell(
-            onTap: () {
-              // stateChange = true;
-              _updateQuantity(-1); // Decrease quantity
-            },
-            child: Icon(Icons.remove, color: Colors.white),
-          ),
-          Container(
-            width: 1.2, // Width of the separator line
-            color: Colors.white,
-          ),
-          Text(
-            //stateChange ? "${changedQuantity}"
-            //            : "${widget.product.quantity}",
-            // "${quantity}",
-            '${widget.product.quantity}',
-            style: TextStyle(color: Colors.white),
-          ),
-          Container(
-            width: 1.2, // Width of the separator line
-            color: Colors.white,
-          ),
-          InkWell(
-            onTap: () {
-              // stateChange = true;
-              _updateQuantity(1); // Increase quantity
-            },
-            child: Icon(Icons.add, color: Colors.white),
-          ),
-        ],
-      ),
-    );
-  }
 
-  // Function to update the quantity in Firestore
-  Future<void> _updateQuantity(int change) async {
-    try {
-      // Replace 'userId' with the actual user ID
 
-      print(widget.product.id);
-      // Fetch the current quantity from Firestore
-      DocumentReference cartItemRef = FirebaseFirestore.instance
-          .collection('userCollection')
-          .doc(userId)
-          .collection('cart_items')
-          .doc(widget.product.id); // Assuming product ID is the document ID
-
-      DocumentSnapshot cartItemSnapshot = await cartItemRef.get();
-      print(cartItemSnapshot);
-
-      if (cartItemSnapshot.exists) {
-        // Update the quantity based on the change
-        num currentQuantity = cartItemSnapshot['quantity'];
-        num newQuantity = currentQuantity + change;
-        // changedQuantity = newQuantity as int;
-
-        print(currentQuantity);
-        print(newQuantity);
-        // Ensure the quantity doesn't go below 0
-        // newQuantity = newQuantity.clamp(0, double.maxFinite);
-
-        // Update the quantity in Firestore
-        await cartItemRef.update({'quantity': newQuantity});
-        widget.product.setQuantity(newQuantity);
-        print(widget.product.quantity);
-        // Update the local state to trigger a rebuild
-        setState(() {
-
-        });
-      } else {
-        print("Doesn't exist");
-      }
-    } catch (e) {
-      print('Error updating quantity: $e');
-    }
-  }
-}
+// class _ChangeQuantity extends StatefulWidget {
+//   final CartItem product;
+//
+//   const _ChangeQuantity({Key? key, required this.product}) : super(key: key);
+//
+//   @override
+//   State<_ChangeQuantity> createState() => _ChangeQuantityState();
+// }
+//
+//
+// class _ChangeQuantityState extends State<_ChangeQuantity> {
+//   // You can implement quantity change logic here
+//   // TextEditingController quantity = TextEditingController();
+//   // bool stateChange = false;
+//   // int changedQuantity = widget.product.quantity as int;
+//   String userId = FirebaseAuth.instance.currentUser!.uid;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     // quantity = widget.product.quantity as TextEditingController;
+//     // print("Rebuild");
+//     // print(stateChange);
+//     return Container(
+//       width: 100,
+//       height: 30,
+//       decoration: ShapeDecoration(
+//         color: Color(0xff403b58),
+//         shape: StadiumBorder(),
+//       ),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//         children: [
+//           InkWell(
+//             onTap: () {
+//               // stateChange = true;
+//               _updateQuantity(-1); // Decrease quantity
+//             },
+//             child: Icon(Icons.remove, color: Colors.white),
+//           ),
+//           Container(
+//             width: 1.2, // Width of the separator line
+//             color: Colors.white,
+//           ),
+//           Text(
+//             //stateChange ? "${changedQuantity}"
+//             //            : "${widget.product.quantity}",
+//             // "${quantity}",
+//             '${widget.product.quantity}',
+//             style: TextStyle(color: Colors.white),
+//           ),
+//           Container(
+//             width: 1.2, // Width of the separator line
+//             color: Colors.white,
+//           ),
+//           InkWell(
+//             onTap: () {
+//               // stateChange = true;
+//               _updateQuantity(1); // Increase quantity
+//             },
+//             child: Icon(Icons.add, color: Colors.white),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+//
+//   // Function to update the quantity in Firestore
+//   Future<void> _updateQuantity(int change) async {
+//     try {
+//       // Replace 'userId' with the actual user ID
+//
+//       print(widget.product.id);
+//       // Fetch the current quantity from Firestore
+//       DocumentReference cartItemRef = FirebaseFirestore.instance
+//           .collection('userCollection')
+//           .doc(userId)
+//           .collection('cart_items')
+//           .doc(widget.product.id); // Assuming product ID is the document ID
+//
+//       DocumentSnapshot cartItemSnapshot = await cartItemRef.get();
+//       print(cartItemSnapshot);
+//
+//       if (cartItemSnapshot.exists) {
+//         // Update the quantity based on the change
+//         num currentQuantity = cartItemSnapshot['quantity'];
+//         num newQuantity = currentQuantity + change;
+//         // changedQuantity = newQuantity as int;
+//
+//         print(currentQuantity);
+//         print(newQuantity);
+//         // Ensure the quantity doesn't go below 0
+//         // newQuantity = newQuantity.clamp(0, double.maxFinite);
+//
+//         // Update the quantity in Firestore
+//         await cartItemRef.update({'quantity': newQuantity});
+//         widget.product.setQuantity(newQuantity);
+//         print(widget.product.quantity);
+//         // Update the local state to trigger a rebuild
+//         setState(() {
+//
+//         });
+//       } else {
+//         print("Doesn't exist");
+//       }
+//     } catch (e) {
+//       print('Error updating quantity: $e');
+//     }
+//   }
+// }

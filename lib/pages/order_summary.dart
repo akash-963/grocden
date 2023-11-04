@@ -1,28 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/order_model.dart';
 import 'cart_page.dart';
 
-class OrderSummaryPage extends StatelessWidget {
+class OrderSummaryPage extends StatefulWidget {
   final OrderSummary orderSummary;
   OrderSummaryPage({required this.orderSummary});
 
+  @override
+  State<OrderSummaryPage> createState() => _OrderSummaryPageState();
+}
 
+class _OrderSummaryPageState extends State<OrderSummaryPage> {
+  late String shopId,userId;
+
+
+  Future<void> getUserAndShopId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('userId')!;
+    shopId = prefs.getString('selectedShopId')!;
+  }
+
+
+  @override
+  void initState(){
+    super.initState();
+    getUserAndShopId();
+  }
 
   Future<void> _placeOrder(BuildContext context) async {
     try {
-      // Assuming you have the shopId and userId available
-      String shopId = "Q9YnD1G1TshBDnbumiKEgqDiukG2"; // Replace with your logic to get shopId
-      String userId = FirebaseAuth.instance.currentUser!.uid; // Replace with your logic to get userId
-
       // Create an Order object
       MyOrder order = MyOrder(
         shop: shopId,
         buyer: userId,
-        totalValue: orderSummary.totalCartValue,
+        totalValue: widget.orderSummary.totalCartValue,
         createdTimestamp: Timestamp.now(),
-        products: orderSummary.orderDetailsList
+        deliveredTimestamp: null,
+        cancelledTimestamp: null,
+        products: widget.orderSummary.orderDetailsList
             .map(
               (orderDetails) => ProductOrderDetails(
             productName: orderDetails.productName,
@@ -44,7 +61,7 @@ class OrderSummaryPage extends StatelessWidget {
         'deliveredTimestamp': null,
         'cancelledTimestamp': null,
         'tag': "undelivered",
-        'status': "ordered",
+        'status': "ongoing",
       });
 
       // Store the product details inside the 'products' subcollection
@@ -72,7 +89,6 @@ class OrderSummaryPage extends StatelessWidget {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +104,7 @@ class OrderSummaryPage extends StatelessWidget {
               'Order Details:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            for (OrderDetails orderDetails in orderSummary.orderDetailsList)
+            for (OrderDetails orderDetails in widget.orderSummary.orderDetailsList)
               ListTile(
                 title: Text('Product: ${orderDetails.productName}'),
                 subtitle: Column(
@@ -102,7 +118,7 @@ class OrderSummaryPage extends StatelessWidget {
               ),
             SizedBox(height: 16),
             Text(
-              'Total Cart Value: \$${orderSummary.totalCartValue}',
+              'Total Cart Value: \$${widget.orderSummary.totalCartValue}',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Spacer(),

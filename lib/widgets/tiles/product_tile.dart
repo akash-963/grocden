@@ -104,6 +104,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/product_model.dart';
+import '../cart_button.dart';
 import '../shop_image.dart';
 
 
@@ -167,7 +168,7 @@ class ProductTile extends StatelessWidget {
                     buttonPadding: EdgeInsets.zero,
                     children: [
                       "\₹${product.price}".text.xl.bold.make(),
-                      _AddToCart(product: product),
+                      AddToCart(product: product),
                     ],
                   ),
                 ],
@@ -310,159 +311,159 @@ class ProductTile extends StatelessWidget {
 // }
 
 
-class _AddToCart extends StatefulWidget {
-  final Product product;
-
-  const _AddToCart({Key? key, required this.product}) : super(key: key);
-
-  @override
-  State<_AddToCart> createState() => _AddToCartState();
-}
-
-class _AddToCartState extends State<_AddToCart> {
-  String userId = FirebaseAuth.instance.currentUser!.uid;
-  bool isInCart = false;
-  // Default quantity
-  int quantity = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    checkCart();
-  }
-
-
-
-
-
-
-  void checkCart() async {
-    // Check if the product is in the cart
-    DocumentSnapshot cartItemSnapshot = await FirebaseFirestore.instance
-        .collection('userCollection')
-        .doc(userId)
-        .collection('cart_items')
-        .doc(widget.product.id)
-        .get();
-
-    if (cartItemSnapshot.exists) {
-      setState(() {
-        isInCart = true;
-        quantity = cartItemSnapshot['quantity'];
-      });
-    }
-  }
-
-  void deleteFromCart() async {
-    // Delete the product from the cart_items collection
-    await FirebaseFirestore.instance
-        .collection('userCollection')
-        .doc(userId)
-        .collection('cart_items')
-        .doc(widget.product.id)
-        .delete();
-
-    // Reset the state to update the UI
-    setState(() {
-      isInCart = false;
-      quantity = 0;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 30,
-      decoration: ShapeDecoration(
-        color: Color(0xff403b58),
-        shape: StadiumBorder(),
-      ),
-      child: isInCart
-          ? Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          InkWell(
-            onTap: () {
-              if (quantity > 1) {
-                setState(() {
-                  quantity--;
-                });
-                updateQuantityInCart();
-              } else {
-                deleteFromCart();
-              }
-            },
-            child: Icon(Icons.remove, color: Colors.white),
-          ),
-          Container(
-            width: 1.2,
-            color: Colors.white,
-          ),
-          Text(
-            " $quantity ",
-            style: TextStyle(color: Colors.white),
-          ),
-          Container(
-            width: 1.2,
-            color: Colors.white,
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                quantity++;
-              });
-              updateQuantityInCart();
-            },
-            child: Icon(Icons.add, color: Colors.white),
-          ),
-        ],
-      )
-          : InkWell(
-        onTap: () {
-          setState(() {
-            isInCart = true;
-            quantity = 1;
-          });
-          addToCart();
-        },
-        child: Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-
-  // Function to add the product to the cart
-  void addToCart() {
-    String shopId = "Q9YnD1G1TshBDnbumiKEgqDiukG2";
-    num quantity = 1;
-    print(widget.product.quantity);
-    print(widget.product.price);
-    FirebaseFirestore.instance
-        .collection('userCollection')
-        .doc(userId)
-        .collection('cart_items')
-        .doc(widget.product.id)
-        .set({
-      'quantity': quantity,
-      'shopId': shopId,
-      'price': widget.product.price*quantity,
-      'name': widget.product.name,
-    });
-    //print(widget.product.shopId);
-
-  }
-
-  // Function to update the quantity in the cart
-  void updateQuantityInCart() {
-    // You should replace 'userId' with the actual user ID
-    String userId = "lK0DVuhU1wgSBAx6NLNlOfT3v3o2";
-    FirebaseFirestore.instance
-        .collection('userCollection')
-        .doc(userId)
-        .collection('cart_items')
-        .doc(widget.product.id)
-        .update({
-      'quantity': quantity,
-    });
-  }
-}
+// class _AddToCart extends StatefulWidget {
+//   final Product product;
+//
+//   const _AddToCart({Key? key, required this.product}) : super(key: key);
+//
+//   @override
+//   State<_AddToCart> createState() => _AddToCartState();
+// }
+//
+// class _AddToCartState extends State<_AddToCart> {
+//   String userId = FirebaseAuth.instance.currentUser!.uid;
+//   bool isInCart = false;
+//   // Default quantity
+//   int quantity = 0;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     checkCart();
+//   }
+//
+//
+//
+//
+//
+//
+//   void checkCart() async {
+//     // Check if the product is in the cart
+//     DocumentSnapshot cartItemSnapshot = await FirebaseFirestore.instance
+//         .collection('userCollection')
+//         .doc(userId)
+//         .collection('cart_items')
+//         .doc(widget.product.id)
+//         .get();
+//
+//     if (cartItemSnapshot.exists) {
+//       setState(() {
+//         isInCart = true;
+//         quantity = cartItemSnapshot['quantity'];
+//       });
+//     }
+//   }
+//
+//   void deleteFromCart() async {
+//     // Delete the product from the cart_items collection
+//     await FirebaseFirestore.instance
+//         .collection('userCollection')
+//         .doc(userId)
+//         .collection('cart_items')
+//         .doc(widget.product.id)
+//         .delete();
+//
+//     // Reset the state to update the UI
+//     setState(() {
+//       isInCart = false;
+//       quantity = 0;
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 100,
+//       height: 30,
+//       decoration: ShapeDecoration(
+//         color: Color(0xff403b58),
+//         shape: StadiumBorder(),
+//       ),
+//       child: isInCart
+//           ? Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//         children: [
+//           InkWell(
+//             onTap: () {
+//               if (quantity > 1) {
+//                 setState(() {
+//                   quantity--;
+//                 });
+//                 updateQuantityInCart();
+//               } else {
+//                 deleteFromCart();
+//               }
+//             },
+//             child: Icon(Icons.remove, color: Colors.white),
+//           ),
+//           Container(
+//             width: 1.2,
+//             color: Colors.white,
+//           ),
+//           Text(
+//             " $quantity ",
+//             style: TextStyle(color: Colors.white),
+//           ),
+//           Container(
+//             width: 1.2,
+//             color: Colors.white,
+//           ),
+//           InkWell(
+//             onTap: () {
+//               setState(() {
+//                 quantity++;
+//               });
+//               updateQuantityInCart();
+//             },
+//             child: Icon(Icons.add, color: Colors.white),
+//           ),
+//         ],
+//       )
+//           : InkWell(
+//         onTap: () {
+//           setState(() {
+//             isInCart = true;
+//             quantity = 1;
+//           });
+//           addToCart();
+//         },
+//         child: Icon(Icons.add, color: Colors.white),
+//       ),
+//     );
+//   }
+//
+//   // Function to add the product to the cart
+//   void addToCart() {
+//     String shopId = "Q9YnD1G1TshBDnbumiKEgqDiukG2";
+//     num quantity = 1;
+//     print(widget.product.quantity);
+//     print(widget.product.price);
+//     FirebaseFirestore.instance
+//         .collection('userCollection')
+//         .doc(userId)
+//         .collection('cart_items')
+//         .doc(widget.product.id)
+//         .set({
+//       'quantity': quantity,
+//       'shopId': shopId,
+//       'price': widget.product.price*quantity,
+//       'name': widget.product.name,
+//     });
+//     //print(widget.product.shopId);
+//
+//   }
+//
+//   // Function to update the quantity in the cart
+//   void updateQuantityInCart() {
+//     // You should replace 'userId' with the actual user ID
+//     String userId = "lK0DVuhU1wgSBAx6NLNlOfT3v3o2";
+//     FirebaseFirestore.instance
+//         .collection('userCollection')
+//         .doc(userId)
+//         .collection('cart_items')
+//         .doc(widget.product.id)
+//         .update({
+//       'quantity': quantity,
+//     });
+//   }
+// }

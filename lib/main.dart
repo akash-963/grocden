@@ -8,6 +8,7 @@ import 'package:grocden/pages/auth/login_page.dart';
 import 'package:grocden/pages/auth/signup_page.dart';
 import 'package:grocden/pages/cart_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -15,6 +16,7 @@ import 'utils/shop_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferences.getInstance();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
@@ -74,7 +76,6 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
       // If the user is logged in, initialize Firebase Messaging and handle FCM token
       await initFirebaseMessaging();
     }
-
     setState(() {
       _isLoading = false;
     });
@@ -85,11 +86,20 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
     if (_isLoading) {
       return Scaffold(body: Center(child: CircularProgressIndicator())); // Display a loading indicator while initializing
     } else if(isLoggedIn){
+      saveUserId();
       return MyHomePage(); // Redirect to the login page or other appropriate page
     } else {
       return LoginPage();
     }
   }
+}
+
+
+Future<void> saveUserId() async {
+  final user = FirebaseAuth.instance.currentUser;
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('userId', user!.uid);
 }
 
 Future<bool> checkIfUserIsLoggedIn() async {
@@ -167,3 +177,23 @@ Future<void> initFirebaseMessaging() async {
     }
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

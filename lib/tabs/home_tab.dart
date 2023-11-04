@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -18,7 +19,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  late String shopId;
+  late String? shopId;
   String userId = FirebaseAuth.instance.currentUser!.uid;
   TextEditingController _searchController = TextEditingController();
   List<Product> _filteredProducts = [];
@@ -35,21 +36,6 @@ class _HomeTabState extends State<HomeTab> {
   }
 
 
-  Future<void> getshop() async {
-    String? selectedShopId = await getSelectedShopId();
-
-    if (selectedShopId != null) {
-      // Do something with the selectedShopId
-      print('Selected Shop ID: $selectedShopId');
-    } else {
-      // Handle the case when the selectedShopId is not available
-      print('No selected Shop ID found');
-    }
-  }
-
-
-
-
   Future<void> loadDataFromFirestore() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('shopCollection/${shopId}/product_list').get();
     List<Map<String, dynamic>> firestoreData =
@@ -60,18 +46,33 @@ class _HomeTabState extends State<HomeTab> {
     });
   }
 
+  void showToast() {
+    Fluttertoast.showToast(
+      msg: 'No shop is selected. Go to Shops Tab and select a listed shop',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+
+    );
+  }
 
   Future<void> loadData() async {
-    // final shopProvider = Provider.of<ShopProvider>(context, listen: false);
-    shopId = "Q9YnD1G1TshBDnbumiKEgqDiukG2";
+    shopId = await getSelectedShopId();
 
-    // print(shopId);
+    if (shopId != null) {
+      // Do something with the selectedShopId
+      print('Selected Shop ID: $shopId');
+      await loadDataFromFirestore();
 
-    if (shopId == null) {
-      return;
+    } else {
+      // Handle the case when the selectedShopId is not available
+      showToast();
+      print('No selected Shop ID found');
+
     }
-
-    await loadDataFromFirestore();
   }
 
   void filterProducts(String searchQuery) {
@@ -85,7 +86,6 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    getshop();
     loadData();
   }
 
