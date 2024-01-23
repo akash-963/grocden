@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupPage extends StatefulWidget{
   @override
@@ -20,6 +21,14 @@ class _SignupPageState extends State<SignupPage> {
             email: _emailController.text,
             password: _passwordController.text
         );
+
+        // set shared preferences userId
+        final user = FirebaseAuth.instance.currentUser;
+        final userId = user?.uid;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("userId",userId!);
+        print(userId);
+
         Navigator.pushReplacementNamed(context, '/locality');
       } on FirebaseAuthException catch (e) {
         String errorMessage = 'An error occurred. Please try again later.';

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -19,8 +20,20 @@ class _LoginPageState extends State<LoginPage> {
             email: _emailController.text,
             password: _passwordController.text
         );
+
+        // set shared preferences userId
+        final user = FirebaseAuth.instance.currentUser;
+        final userId = user?.uid;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("userId",userId!);
+        print(userId);
+
+        // Navigate to home tab on login
         Navigator.pushReplacementNamed(context, '/home');
+
       }  on FirebaseAuthException catch (e) {
+
+        // Errors on Authentication Exception
         String errorMessage = 'An error occurred. Please try again later.';
         if (e.code == 'user-not-found') {
           errorMessage = 'No user found with this email.';
@@ -38,6 +51,8 @@ class _LoginPageState extends State<LoginPage> {
           duration: Duration(seconds: 5),
         ));
       } catch (e) {
+
+        // other errors
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('An error occurred. Please try again later.'),
           duration: Duration(seconds: 5),
