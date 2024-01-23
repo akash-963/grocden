@@ -59,3 +59,54 @@ class ShopList extends StatelessWidget{
   }
 }
 
+class ShopsList extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: ShopModel.shops.length,
+      itemBuilder: (context,index){
+        final shop = ShopModel.shops[index];
+
+        //infinite list
+        //final shop = ShopModel.shops[index%ShopModel.shops.length];
+        return InkWell(
+          onTap: () async {
+            await saveSelectedShopId(shop.id);
+            showToast();
+            // Use the Navigator to push the HomeTab route
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => OrderByListPage(shop: shop)),
+            // );
+          },
+          child: ShopsTile(shop: shop),
+        );
+      },
+    );
+  }
+
+  Future<void> saveSelectedShopId(String shopId) async {
+    try {
+      // Save the selected shopId to SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('selectedShopId', shopId);
+    } catch (e) {
+      print('Error saving selectedShopId: $e');
+    }
+  }
+
+  void showToast() {
+    Fluttertoast.showToast(
+      msg: 'This is a toast message',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+
+    );
+  }
+}
+

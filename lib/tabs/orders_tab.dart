@@ -20,7 +20,7 @@ class _OrdersTabState extends State<OrdersTab> {
 
   Future<void> getdetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId = prefs.getString('userId')!;
+    userId = prefs.getString('userId') ?? '';
     print(userId);
     getOrdersDetails();
   }

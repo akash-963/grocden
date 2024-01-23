@@ -83,6 +83,8 @@ class _LocalitySearchPageState extends State<LocalitySearchPage> {
         'locality': locality,
         'phoneNumber': phone,
       });
+
+      Navigator.pushReplacementNamed(context, '/selectShopPage');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

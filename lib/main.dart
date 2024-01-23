@@ -9,10 +9,14 @@ import 'package:grocden/pages/auth/signup_page.dart';
 import 'package:grocden/pages/cart_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'models/shop_model.dart';
 import 'pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'pages/shops_page.dart';
 import 'utils/shop_provider.dart';
+import 'widgets/lists/shops_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,12 +50,15 @@ class MyApp extends StatelessWidget {
         '/signup':(context) => SignupPage(),
         '/locality':(context) => LocalitySearchPage(),
         '/cart':(context) => CartPage(),
+        '/selectShopPage':(context) => ShopsPage(),
         // 'orders':(context) => ,
         // Notifications
       },
     );
   }
 }
+
+
 
 class CheckLoggedIn extends StatefulWidget {
   @override
@@ -60,6 +67,7 @@ class CheckLoggedIn extends StatefulWidget {
 
 class _CheckLoggedInState extends State<CheckLoggedIn> {
   bool _isLoading = true;
+  bool _docexists = false;
   late bool isLoggedIn;
 
   @override
@@ -71,6 +79,7 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
   Future<void> _initializeApp() async {
     // Check if the user is logged in (replace with your authentication logic)
     isLoggedIn = await checkIfUserIsLoggedIn();
+    _docexists = await checkIfDocExists();
 
     if (isLoggedIn) {
       // If the user is logged in, initialize Firebase Messaging and handle FCM token
@@ -87,7 +96,10 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
       return Scaffold(body: Center(child: CircularProgressIndicator())); // Display a loading indicator while initializing
     } else if(isLoggedIn){
       saveUserId();
-      return MyHomePage(); // Redirect to the login page or other appropriate page
+      if(_docexists)
+        return MyHomePage();
+      else
+        return LocalitySearchPage();// Redirect to the login page or other appropriate page
     } else {
       return LoginPage();
     }
@@ -110,6 +122,26 @@ Future<bool> checkIfUserIsLoggedIn() async {
   return user != null;
   return false; // Replace with your authentication logic
 }
+
+
+
+Future<bool> checkIfDocExists() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? userId = prefs.getString('userId');
+
+  try {
+    DocumentSnapshot<Map<String, dynamic>> docSnapshot = await FirebaseFirestore.instance
+        .collection('userCollection') // Replace with your actual collection name
+        .doc(userId)
+        .get();
+
+    return docSnapshot.exists;
+  } catch (e) {
+    print('Error checking if doc exists: $e');
+    return false;
+  }
+}
+
 
 Future<void> initFirebaseMessaging() async {
   final fcmToken = await FirebaseMessaging.instance.getToken();

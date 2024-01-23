@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class ProductModel {
-  static final shopModel = ProductModel._internal();
+  static final productModel = ProductModel._internal();
 
   ProductModel._internal();
 
-  factory ProductModel() => shopModel;
+  factory ProductModel() => productModel;
 
   static List<Product> products = [];
 }

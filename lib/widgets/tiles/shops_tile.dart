@@ -144,3 +144,42 @@ class ShopTile extends StatelessWidget{
   }
 
 }
+
+
+
+class ShopsTile extends StatelessWidget{
+  final Shop shop;
+
+  const ShopsTile({super.key, required this.shop});
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (){
+        Navigator.pushReplacementNamed(context, '/home');
+      },
+      child: VxBox(
+          child: Row(
+            children: [
+              ShopImage(image: shop.image),
+              Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      shop.name.text.lg.xl3.color(context.accentColor).bold.make(),
+                      10.heightBox,
+                      shop.address1.text.make(),
+                      shop.address2.text.make(),
+                    ],
+                  )
+              ),
+              Icon(Icons.location_pin,size: 50, color: context.primaryColor,),
+              16.widthBox
+            ],
+          )
+
+      ).color(context.cardColor).roundedLg.square(120).make().py8(),
+    );
+  }
+
+}

@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-class ProductModel {
-  static final shopModel = ProductModel._internal();
-
-  ProductModel._internal();
-
-  factory ProductModel() => shopModel;
-
-  static List<CartItem> products = [];
-
-}
+// class ProductModel {
+//   static final shopModel = ProductModel._internal();
+//
+//   ProductModel._internal();
+//
+//   factory ProductModel() => shopModel;
+//
+//   static List<CartItem> products = [];
+//
+// }
 
 class CartItem {
   final String id;
