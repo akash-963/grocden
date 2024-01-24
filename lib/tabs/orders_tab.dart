@@ -83,6 +83,7 @@ class _OrdersTabState extends State<OrdersTab> {
           List<ProductOrderDetails> products = await fetchProductsForOrder(orderId);
 
           MyOrder order = MyOrder(
+            id: orderId,
             shop: orderSnapshot['shop'],
             buyer: orderSnapshot['buyer'],
             totalValue: orderSnapshot['totalValue'],

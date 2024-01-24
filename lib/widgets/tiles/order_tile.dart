@@ -61,10 +61,7 @@ class OrderTile extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
         child: ListTile(
           leading: Image.asset("assets/images/17727433.jpg"),
-          title: Row(children: [
-              Text('Order ID: '),
-              //Text("")
-          ]),
+          title: Text('Order ID: ${order.id}'),
           //${order.orderId}'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

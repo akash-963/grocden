@@ -33,6 +33,7 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
     try {
       // Create an Order object
       MyOrder order = MyOrder(
+        id: '',
         shop: shopId,
         buyer: userId,
         totalValue: widget.orderSummary.totalCartValue,
