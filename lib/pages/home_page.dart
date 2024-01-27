@@ -4,7 +4,6 @@ import 'package:grocden/tabs/home_tab.dart';
 import 'package:grocden/tabs/shops_tab.dart';
 import '../tabs/notifications_tab.dart';
 import '../tabs/orders_tab.dart';
-import '../utils/shop_provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -54,12 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-
   PageController pageController = PageController(
     initialPage: 0,
-    keepPage: true,
+    keepPage: false,
+    //viewportFraction: 0.8,
   );
-
 
 
   Widget buildPageView() {
@@ -69,56 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
         pageChanged(index);
       },
       children: <Widget>[
-        Scaffold(
-          body: HomeTab(),
-        ),
-        Scaffold(
-         body: ShopTab(),
-        ),
-        Scaffold(
-          body: OrdersTab(),
-        ),
-        Scaffold(
-          body: NotificationsTab(),
-        ),
+        HomeTab(),
+        ShopTab(),
+        OrdersTab(),
+        NotificationsTab(),
       ],
     );
   }
-
-
-
-  // Widget buildPageView() {
-  //   if (shopId == null) {
-  //     bottomSelectedIndex = 1;
-  //
-  //     // If shopId is null, navigate to the Shops tab
-  //     return Scaffold(
-  //       body: ShopTab(),
-  //     );
-  //   } else {
-  //     // If shopId is not null, build the regular PageView
-  //     return PageView(
-  //       controller: pageController,
-  //       onPageChanged: (index) {
-  //         pageChanged(index);
-  //       },
-  //       children: <Widget>[
-  //         Scaffold(
-  //           body: HomeTab(),
-  //         ),
-  //         Scaffold(
-  //           body: ShopTab(),
-  //         ),
-  //         Scaffold(
-  //           body: OrdersTab(),
-  //         ),
-  //         Scaffold(
-  //           body: NotificationsTab(),
-  //         ),
-  //       ],
-  //     );
-  //   }
-  // }
 
 
   @override
@@ -128,13 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-
   void pageChanged(int index) {
     setState(() {
       bottomSelectedIndex = index;
     });
   }
-
 
 
   void bottomTapped(int index) {

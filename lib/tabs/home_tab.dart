@@ -97,6 +97,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    // loadData();
     return Scaffold(
       backgroundColor: Color(0xff82CD47),
       floatingActionButton: Container(

@@ -90,7 +90,7 @@ class ProductList extends StatelessWidget {
           height: 250,
         ),
         shrinkWrap: true,
-        itemCount: products.length*10,
+        itemCount: products.length,
         itemBuilder: (context, index) {
           final product = products[index%products.length];
           return InkWell(
