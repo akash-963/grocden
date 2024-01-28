@@ -44,12 +44,15 @@ class ProductList extends StatelessWidget {
         itemBuilder: (context, index) {
           final product = products[index%products.length];
           return InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductDetailsPage(product: product),
-              ),
-            ),
+            onTap: (){
+
+            },
+            // onTap: () => Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => ProductDetailsPage(product: product),
+            //   ),
+            // ),
             child: ProductTile(product: product),
           );
         },
@@ -57,20 +60,3 @@ class ProductList extends StatelessWidget {
   }
 }
 
-class ProductDetailsPage extends StatelessWidget {
-  final Product product;
-
-  ProductDetailsPage({required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: Text('Product Details Page'),
-        ),
-      ),
-    );
-  }
-}
