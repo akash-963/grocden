@@ -6,13 +6,23 @@ class AppHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: Vx.m8,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          "Grocden.Com".text.xl5.bold.color(Color(0xff285430)).make(),
-          5.heightBox,
-          "Products We Currently Offer".text.xl2.make(),
-        ],
+      child: Row(
+        children:[
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/images/logo.png',),
+            radius: 40,
+            backgroundColor: Colors.transparent,
+          ),
+          SizedBox(width: 10,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              "Grocden.Com".text.xl5.bold.color(Color(0xff285430)).make(),
+              5.heightBox,
+              "Groceries at your doorstep".text.xl2.make(),
+            ],
+          ),
+        ]
       ),
     );
   }
