@@ -119,20 +119,29 @@ class _HomeTabState extends State<HomeTab> {
             children: [
               AppHeader(),
               HeightBox(10),
-              TextField(
-                controller: _searchController,
-                onChanged: (value) {
-                  filterProducts(value);
-                },
-                decoration: InputDecoration(
-                  //labelText: 'Search Products',
-                  hintText: 'Search Products',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+              Row(
+                children: [
+                  TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      filterProducts(value);
+                    },
+                    decoration: InputDecoration(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.82,
+
+                      ),
+                      hintText: 'Search Products',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
+                  Icon(Icons.filter_list_outlined,size: MediaQuery.of(context).size.width * 0.10,),
+                ]
               ),
               if (_filteredProducts.isNotEmpty)
                 ProductList(products: _filteredProducts)
