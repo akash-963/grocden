@@ -80,7 +80,7 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
         'OrdersHistory': FieldValue.arrayUnion([orderId]),
       });
 
-
+      deleteCartItems();
 
       // Navigate back to the previous screen
       Navigator.pop(context);
@@ -151,5 +151,21 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
         ),
       ),
     );
+  }
+
+
+  // delete all cart items and then collection itself
+  Future<void> deleteCartItems() async {
+    CollectionReference cartItemsCollection =
+    FirebaseFirestore.instance.collection('userCollection/$userId/cart_items');
+
+    QuerySnapshot cartItemsSnapshot = await cartItemsCollection.get();
+
+    for (QueryDocumentSnapshot document in cartItemsSnapshot.docs) {
+      await cartItemsCollection.doc(document.id).delete();
+    }
+
+    // After deleting all documents, delete the collection itself
+    await cartItemsCollection.doc().delete();
   }
 }
