@@ -113,16 +113,6 @@ class _HomeTabState extends State<HomeTab> {
       ),
       body: SafeArea(
         child: Container(
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //     colors: [
-          //       Colors.green,
-          //       Vx.green400,
-          //     ],
-          //   ),
-          // ),
           padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

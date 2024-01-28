@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../models/cart_model.dart';
-import '../widgets/cart_button.dart';
+import '../widgets/buttons/cart_button.dart';
 import '../widgets/shop_image.dart';
 import 'order_summary.dart';
 

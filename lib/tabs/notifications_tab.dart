@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/notification_model.dart';
 
 class NotificationsTab extends StatelessWidget {
@@ -40,9 +39,10 @@ class NotificationsTab extends StatelessWidget {
               final notification = notifications[index];
 
               return Container(
+
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Color(0xff9fe2bf),
+                  // color: Color(0xff9fe2bf),
                 ),
                 child: ListTile(
                   leading: CircleAvatar(

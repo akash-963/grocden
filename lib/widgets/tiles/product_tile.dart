@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:grocden/widgets/product_image.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../models/product_model.dart';
-import '../cart_button.dart';
+import '../buttons/add_to_cart.dart';
+import '../buttons/cart_button.dart';
 import '../shop_image.dart';
 
 
