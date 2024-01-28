@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/order_model.dart';
-import '../../pages/order_details_page.dart';
 import '../tiles/order_tile.dart';
 
 class OrderList extends StatelessWidget {
@@ -16,15 +15,7 @@ class OrderList extends StatelessWidget {
       itemCount: orders.length,
       itemBuilder: (context, index) {
         final order = orders[index];
-        return InkWell(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OrderDetailsPage(order: order),
-            ),
-          ),
-          child: OrderTile(order: order),
-        );
+        return OrderTile(order: order);
       },
     );
   }
