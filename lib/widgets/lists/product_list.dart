@@ -1,53 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:grocden/models/product_model.dart';
-// import '../tiles/product_tile.dart';
-//
-//
-// class ProductList extends StatelessWidget{
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       shrinkWrap: true,
-//       itemCount: ProductModel.products.length,
-//       itemBuilder: (context,index){
-//         final product = ProductModel.products[index];
-//
-//         return InkWell(
-//             onTap: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                     builder: (context)=>
-//                         ProductDetailsPage()
-//                 )
-//             ),
-//             child: ProductTile(product:  product));
-//       },
-//     );
-//   }
-// }
-//
-// class ProductDetailsPage extends StatefulWidget {
-//   const ProductDetailsPage({super.key});
-//
-//   @override
-//   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
-// }
-//
-// class _ProductDetailsPageState extends State<ProductDetailsPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Text('Product Details Page'),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:grocden/models/product_model.dart';
 import '../../utils/grid_delegate.dart';
@@ -85,9 +35,9 @@ class ProductList extends StatelessWidget {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCountAndFixedHeight(
           crossAxisCount: 2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          height: 250,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          height: MediaQuery.of(context).copyWith().size.height / 3.4,
         ),
         shrinkWrap: true,
         itemCount: products.length,

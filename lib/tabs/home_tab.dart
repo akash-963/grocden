@@ -123,7 +123,7 @@ class _HomeTabState extends State<HomeTab> {
           //     ],
           //   ),
           // ),
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+          padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
