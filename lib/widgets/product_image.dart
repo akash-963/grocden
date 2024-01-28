@@ -8,9 +8,10 @@ class ProductImage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    // print(MediaQuery.of(context).size.height);
     return Image.network(
         image,
       fit: BoxFit.contain,
-    ).box.rounded.color(context.canvasColor).make().p8().h(MediaQuery.of(context).copyWith().size.height / 6,).w(MediaQuery.of(context).copyWith().size.width / 2,);
+    ).box.rounded.color(context.canvasColor).make().p8().h(MediaQuery.of(context).size.height / 6,).w(MediaQuery.of(context).size.width / 2.5,);
   }
 }
