@@ -106,30 +106,46 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             for (OrderDetails orderDetails in widget.orderSummary.orderDetailsList)
-              ListTile(
-                title: Text('Product: ${orderDetails.productName}'),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Quantity: ${orderDetails.quantity}'),
-                    Text('Price: \$${orderDetails.price}'),
-                    Text('Value: \$${orderDetails.value}'),
-                  ],
+                    Text(
+                      '${orderDetails.productName.length > 20 ? orderDetails.productName.substring(0, 20) + '...' : orderDetails.productName}',
+                      style: TextStyle(fontSize: 16.0,),
+                    ),
+                    Text('\₹${orderDetails.value}'),
+                  ]
                 ),
+                // subtitle: Text('Price: \$${orderDetails.value}'),
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Product: ${orderDetails.productName}'),
+                      Text('Quantity: ${orderDetails.quantity}'),
+                      Text('Value: \₹${orderDetails.value}'),
+                    ],
+                  ),
+                ],
               ),
+
             SizedBox(height: 16),
-            Text(
-              'Total Cart Value: \$${widget.orderSummary.totalCartValue}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
             Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                // Implement your logic to proceed with the order here
-                // For now, we'll just pop the current page
-                _placeOrder(context);
-              },
-              child: Text('Buy Now'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                  Text(
+                    'Total Cart Value: \₹${widget.orderSummary.totalCartValue}',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  ElevatedButton(
+                  onPressed: () {
+                    _placeOrder(context);
+                  },
+                  child: Text('Buy Now'),
+                ),
+              ]
             ),
           ],
         ),

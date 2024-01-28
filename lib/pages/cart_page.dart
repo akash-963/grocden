@@ -274,7 +274,7 @@ class CartTile extends StatelessWidget {
                     alignment: MainAxisAlignment.spaceBetween,
                     buttonPadding: EdgeInsets.zero,
                     children: [
-                      "\$${item.price}".text.xl.bold.make(),
+                      "\₹${item.price}".text.xl.bold.make(),
                       ChangeQuantity(product: item),
                     ],
                   ),
