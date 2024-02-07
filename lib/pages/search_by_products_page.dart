@@ -16,6 +16,7 @@ class SearchProductsScreen extends StatefulWidget {
 class _SearchProductsScreenState extends State<SearchProductsScreen> {
   late String? shopId;
   TextEditingController _searchController = TextEditingController();
+  late FocusNode _searchFocusNode;
   List<Product> _filteredProducts = []; // Assuming Product is your data model
 
 
@@ -80,11 +81,13 @@ class _SearchProductsScreenState extends State<SearchProductsScreen> {
   @override
   void initState() {
     super.initState();
+    _searchFocusNode = FocusNode();
     loadData();
   }
 
   @override
   void dispose() {
+    _searchFocusNode.dispose();
     _searchController.dispose();
     super.dispose();
   }
@@ -95,12 +98,16 @@ class _SearchProductsScreenState extends State<SearchProductsScreen> {
       appBar: AppBar(
         title: TextField(
           controller: _searchController,
+          focusNode: _searchFocusNode,
+          autofocus: true,
+          cursorColor: Colors.black54,
           onChanged: (value) {
             filterProducts(value);
           },
           decoration: InputDecoration(
             hintText: 'Search Products',
             border: InputBorder.none,
+
           ),
         ),
         actions: [
