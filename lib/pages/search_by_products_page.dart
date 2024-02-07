@@ -135,13 +135,4 @@ class _SearchProductsScreenState extends State<SearchProductsScreen> {
       ),
     );
   }
-
-  // void filterProducts(String value) {
-  //   // Implement filtering logic here
-  //   // This could involve querying a database or filtering a list
-  //   // For demonstration, let's assume you're filtering a list of products
-  //   setState(() {
-  //      _filteredProducts = _products.where((product) => product.name.contains(value)).toList();
-  //   });
-  // }
 }
