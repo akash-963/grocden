@@ -7,6 +7,7 @@ import 'package:grocden/pages/auth/locality_page.dart';
 import 'package:grocden/pages/auth/login_page.dart';
 import 'package:grocden/pages/auth/signup_page.dart';
 import 'package:grocden/pages/cart_page.dart';
+import 'package:grocden/pages/search_by_products_page.dart';
 import 'package:grocden/tabs/home_tab.dart';
 import 'package:grocden/tabs/notifications_tab.dart';
 import 'package:grocden/tabs/orders_tab.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/locality':(context) => LocalitySearchPage(),
         '/cart':(context) => CartPage(),
         '/selectShopPage':(context) => ShopsPage(),
+        '/searchProductsPage':(context) => SearchProductsScreen(),
         // '/home-tab':(context) => HomeTab(),
         // '/shops-tab':(context) => ShopTab(),
         // '/orders-tab':(context) => OrdersTab(),

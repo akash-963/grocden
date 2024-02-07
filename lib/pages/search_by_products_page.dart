@@ -1,28 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 import 'package:velocity_x/velocity_x.dart';
+
 import '../models/product_model.dart';
-import '../utils/shop_provider.dart';
-import '../widgets/app_header.dart';
 import '../widgets/lists/product_list.dart';
 
-class HomeTab extends StatefulWidget {
+class SearchProductsScreen extends StatefulWidget {
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  _SearchProductsScreenState createState() => _SearchProductsScreenState();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class _SearchProductsScreenState extends State<SearchProductsScreen> {
   late String? shopId;
-  String userId = FirebaseAuth.instance.currentUser!.uid;
   TextEditingController _searchController = TextEditingController();
-  List<Product> _filteredProducts = [];
+  List<Product> _filteredProducts = []; // Assuming Product is your data model
 
 
   Future<String?> getSelectedShopId() async {
@@ -97,9 +91,27 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    // loadData();
     return Scaffold(
-      backgroundColor: Color(0xff82CD47),
+      appBar: AppBar(
+        title: TextField(
+          controller: _searchController,
+          onChanged: (value) {
+            filterProducts(value);
+          },
+          decoration: InputDecoration(
+            hintText: 'Search Products',
+            border: InputBorder.none,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.filter_list_outlined),
+            onPressed: () {
+              // Implement filter functionality here
+            },
+          ),
+        ],
+      ),
       floatingActionButton: Container(
         height: 65,
         width: 65,
@@ -111,58 +123,25 @@ class _HomeTabState extends State<HomeTab> {
           child: Icon(CupertinoIcons.cart, size: 40),
         ),
       ),
+      // body: _filteredProducts.isNotEmpty
+      //       ? ProductList(products: _filteredProducts).pOnly(top: 16).expand()
+      //       : Center(child: CircularProgressIndicator()),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppHeader(),
-              HeightBox(10),
-              Row(
-                children: [
-                  TextField(
-                    controller: _searchController,
-                    onTap: (){
-                      Navigator.pushNamed(context, '/searchProductsPage');
-                    },
-                    onChanged: (value) {
-                      filterProducts(value);
-                    },
-                    decoration: InputDecoration(
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.82,
-
-                      ),
-                      hintText: 'Search Products',
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
-                  Icon(Icons.filter_list_outlined,size: MediaQuery.of(context).size.width * 0.10,),
-                ]
-              ),
-              if (_filteredProducts.isNotEmpty)
-                ProductList(products: _filteredProducts)
-                    .pOnly(top: 16)
-                    .expand()
-              else
-                CircularProgressIndicator().centered().expand(),
-            ],
-          ),
+        child: _filteredProducts.isNotEmpty
+          ? ProductList(products: _filteredProducts).pOnly(top: 16).expand()
+          : CircularProgressIndicator().centered().expand(),
         ),
       ),
     );
   }
+
+  // void filterProducts(String value) {
+  //   // Implement filtering logic here
+  //   // This could involve querying a database or filtering a list
+  //   // For demonstration, let's assume you're filtering a list of products
+  //   setState(() {
+  //      _filteredProducts = _products.where((product) => product.name.contains(value)).toList();
+  //   });
+  // }
 }
-
-
-
-
-
-
-
