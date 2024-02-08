@@ -13,18 +13,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String? shopId = "Q9YnD1G1TshBDnbumiKEgqDiukG2";
-
-  // void loadShopId() async {
-  //   // Assuming you have a method in your provider to get the shopId
-  //   shopId = await ShopProvider().getShopId();
-  //
-  //   print(shopId);
-  //   setState(() {
-  //     // Update the state when shopId is loaded
-  //   });
-  // }
-
   int bottomSelectedIndex = 0;
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
@@ -79,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    // loadShopId();
   }
 
 
