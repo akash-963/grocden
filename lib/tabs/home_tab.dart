@@ -25,6 +25,11 @@ class _HomeTabState extends State<HomeTab> {
   List<Product> _filteredProducts = [];
 
 
+  void _logout(){
+    FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
   Future<String?> getSelectedShopId() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -143,7 +148,11 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.02,),
-                  Icon(Icons.filter_list_outlined,size: MediaQuery.of(context).size.width * 0.10,),
+                  InkWell(
+                      onTap:(){
+                          _logout();
+                      },
+                      child: Icon(Icons.filter_list_outlined,size: MediaQuery.of(context).size.width * 0.10,)),
                 ]
               ),
               if (_filteredProducts.isNotEmpty)

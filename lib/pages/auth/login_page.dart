@@ -63,76 +63,95 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              //mainAxisSize: MainAxisSize.max,
-              children: [
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Email',
-                      labelText: 'Email'
-                  ),
-                  validator: (value){
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    // add more email validation logic
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10,),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                      hintText: 'Enter Password',
-                      labelText: 'Password'
-                  ),
-                  validator: (value){
-                    if (value!.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    // add more password validation logic
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10,),
-                ElevatedButton(
-                    onPressed: _login,
-                    child: Text('Login')
-                ),
-
-                SizedBox(height: 10,),
-                Row(
-                    children: [
-                      TextButton(
-                        onPressed: (){
-                          //implement forget password functionality
-                        },
-                        child: Text('Forget Password'),
-                      ),
-                      Spacer(),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/signup');
-                          },
-                          child: Text('signup')
-                      ),
-                    ]
-                ),
-              ],
+    return Stack(
+        children: <Widget>[
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.85), // 75% transparency
+              BlendMode.srcATop,
+            ),
+            child: Image.asset(
+              "assets/images/background.jpeg",
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
             ),
           ),
-        ),
-      ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: Text('Login Pagge'),
+            ),
+            body: Center(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    //mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TextFormField(
+                        cursorColor: Colors.white,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                            hintText: 'Enter Email',
+                            labelText: 'Email',
+
+                        ),
+                        validator: (value){
+                          if (value!.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          // add more email validation logic
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                            hintText: 'Enter Password',
+                            labelText: 'Password'
+                        ),
+                        validator: (value){
+                          if (value!.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          // add more password validation logic
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                          onPressed: _login,
+                          child: Text('Login')
+                      ),
+
+                      SizedBox(height: 10,),
+                      Row(
+                          children: [
+                            TextButton(
+                              onPressed: (){
+                                //implement forget password functionality
+                              },
+                              child: Text('Forget Password'),
+                            ),
+                            Spacer(),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/signup');
+                                },
+                                child: Text('signup')
+                            ),
+                          ]
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ]
     );
   }
 }
