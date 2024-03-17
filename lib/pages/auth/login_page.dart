@@ -283,6 +283,9 @@ class _LoginPageClassState extends State<LoginPageClass> {
                         child: Column(
                           //mainAxisSize: MainAxisSize.max,
                           children: [
+                            SizedBox(
+                              height: 16,
+                            ),
                             Text(
                               "Login",
                               style: TextStyle(
@@ -309,6 +312,7 @@ class _LoginPageClassState extends State<LoginPageClass> {
                             SizedBox(height: 10,),
                             TextFormField(
                               controller: _passwordController,
+                              obscureText: true,
                               decoration: InputDecoration(
                                   hintText: 'Enter Password',
                                   labelText: 'Password'
@@ -331,7 +335,12 @@ class _LoginPageClassState extends State<LoginPageClass> {
                                     height: 48,
                                     width: 100,
                                     child: Center(
-                                        child: Text('Login')
+                                        child: Text(
+                                          'Login',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        )
                                     )
                                 )
                             ),

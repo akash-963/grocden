@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignupPage extends StatefulWidget{
+class SignupPageClass extends StatefulWidget{
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<SignupPageClass> createState() => _SignupPageClassState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageClassState extends State<SignupPageClass> {
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -56,60 +56,133 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign Up'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Container(
-          child: Center(
-            child: Form(
-              key: _formkey,
+    return Stack(
+        children: <Widget>[
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Color(0xFFb7fa62), // 75% transparency
+              BlendMode.srcATop,
+            ),
+            child: Image.asset(
+              "assets/images/background.jpeg",
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
               child: Column(
-                children: [
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                        hintText: 'Enter Email',
-                        labelText: 'Email'
+                  children: [
+                    Opacity(
+                      opacity: 0.80,
+                      child: Image(
+                        image: AssetImage('assets/images/logo.png'),
+                        fit: BoxFit.fitWidth,
+                        height: MediaQuery.of(context).size.height*0.30,
+                        width: MediaQuery.of(context).size.width,
+                      ),
                     ),
-                    validator: (value){
-                      if (value!.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      // add more email validation logic
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10,),
-                  TextFormField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                        hintText: 'Enter Password',
-                        labelText: 'Password'
-                    ),
-                    validator: (value){
-                      if (value!.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      // add more password validation logic
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 10,),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.70,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40))
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Container(
+                            child: Center(
+                              child: Form(
+                                key: _formkey,
+                                child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      Text(
+                                        "SignUp",
+                                        style: TextStyle(
+                                          fontSize: 35,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFa1ff00),
+                                        ),
+                                      ),
+                                      TextFormField(
+                                        controller: _emailController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Enter Email',
+                                            labelText: 'Email'
+                                        ),
+                                        validator: (value){
+                                          if (value!.isEmpty) {
+                                            return 'Please enter your email';
+                                          }
+                                          // add more email validation logic
+                                          return null;
+                                        },
+                                      ),
+                                      SizedBox(height: 10,),
+                                      TextFormField(
+                                        obscureText: true,
+                                        controller: _passwordController,
+                                        decoration: InputDecoration(
+                                            hintText: 'Enter Password',
+                                            labelText: 'Password'
+                                        ),
+                                        validator: (value){
+                                          if (value!.isEmpty) {
+                                            return 'Please enter your password';
+                                          }
+                                          // add more password validation logic
+                                          return null;
+                                        },
+                                      ),
+                                      SizedBox(height: 16,),
 
-                  ElevatedButton(
-                      onPressed: _signup,
-                      child: Text('Sign Up')
-                  ),
-                ],
+                                      ElevatedButton(
+                                          onPressed: _signup,
+                                          child: SizedBox(
+                                              height: 48,
+                                              width: 100,
+                                              child: Center(
+                                                  child: Text(
+                                                    'Sign Up',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    ),
+                                                  )
+                                              )
+                                          )
+                                      ),
+
+                                      Spacer(),
+                                      Row(
+                                        children: [
+                                          Spacer(),
+                                          TextButton(
+                                            onPressed: (){
+                                              Navigator.pushNamed(context, '/login');
+                                            },
+                                            child: Text('Already have an account? Login'),
+                                          ),
+                                        ],
+                                      ),
+                                    ]
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
               ),
             ),
           ),
-        ),
-      ),
+        ]
     );
   }
 }

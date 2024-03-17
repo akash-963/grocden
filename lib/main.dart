@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         '/':(context)=>CheckLoggedIn(),
         '/home':(context) => MyHomePage(),
         '/login':(context) => LoginPageClass(),
-        '/signup':(context) => SignupPage(),
+        '/signup':(context) => SignupPageClass(),
         '/locality':(context) => LocalitySearchPage(),
         '/cart':(context) => CartPage(),
         '/selectShopPage':(context) => ShopsPage(),
