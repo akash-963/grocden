@@ -8,20 +8,14 @@ import 'package:grocden/pages/auth/login_page.dart';
 import 'package:grocden/pages/auth/signup_page.dart';
 import 'package:grocden/pages/cart_page.dart';
 import 'package:grocden/pages/search_by_products_page.dart';
-import 'package:grocden/tabs/home_tab.dart';
-import 'package:grocden/tabs/notifications_tab.dart';
-import 'package:grocden/tabs/orders_tab.dart';
-import 'package:grocden/tabs/shops_tab.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'models/shop_model.dart';
 import 'pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'pages/shops_page.dart';
 import 'utils/shop_provider.dart';
-import 'widgets/lists/shops_list.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +45,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/':(context)=>CheckLoggedIn(),
         '/home':(context) => MyHomePage(),
-        '/login':(context) => LoginPage(),
+        '/login':(context) => LoginPageClass(),
         '/signup':(context) => SignupPage(),
         '/locality':(context) => LocalitySearchPage(),
         '/cart':(context) => CartPage(),
@@ -111,7 +105,7 @@ class _CheckLoggedInState extends State<CheckLoggedIn> {
       else
         return LocalitySearchPage();// Redirect to the login page or other appropriate page
     } else {
-      return LoginPage();
+      return LoginPageClass();
     }
   }
 }
