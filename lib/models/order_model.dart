@@ -105,6 +105,8 @@ class MyOrder {
   final String id;
   final String shop;
   final String buyer;
+  final String bName;
+  final String bAddress;
   final double totalValue;
   final Timestamp createdTimestamp;
   Timestamp? deliveredTimestamp;
@@ -116,6 +118,8 @@ class MyOrder {
   MyOrder({
     required this.shop,
     required this.buyer,
+    required this.bName,
+    required this.bAddress,
     required this.totalValue,
     required this.createdTimestamp,
     required this.products,
@@ -151,6 +155,8 @@ class MyOrder {
       id: data['id'],
       shop: data['shop'],
       buyer: data['buyer'],
+      bName: data['bName'],
+      bAddress: data['bAddress'],
       totalValue: data['totalValue'],
       createdTimestamp: createdTimestamp,
       deliveredTimestamp: deliveredTimestamp,
